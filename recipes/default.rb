@@ -62,6 +62,11 @@ end
 
 service 'fail2ban' do
   supports [status: true, restart: true]
-  action [:enable, :start] if platform_family?('rhel')
-  action [:enable] if platform_family?('debian')
+  action [:enable, :start]
+  # For Debian fail2ban versions before 0.8.6-3, the status command
+  # always returns 0, even when the service isn't running.
+  if (platform?('ubuntu') && node['platform_version'].to_f < 12.04) ||
+     (platform?('debian') && node['platform_version'].to_f < 7)
+    status_command '/etc/init.d/fail2ban status | grep -q "is running"'
+  end
 end
