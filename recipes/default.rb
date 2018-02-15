@@ -70,3 +70,16 @@ service 'fail2ban' do
     status_command '/etc/init.d/fail2ban status | grep -q "is running"'
   end
 end
+
+# Fix the hardcoded 'set logtarget /var/log/fail2ban.log' command that is in
+# the stock Debian logrotate config
+cookbook_file '/etc/logrotate.d/fail2ban' do
+  source 'fail2ban-logrotate.txt'
+  owner 'root'
+  group 'root'
+  mode '0644'
+  only_if {
+    (platform?('ubuntu') && node['platform_version'].to_f < 16.04) ||
+    (platform?('debian') && node['platform_version'].to_f < 9 )
+  }
+end
