@@ -4,7 +4,7 @@ maintainer_email 'cookbooks@chef.io'
 license 'Apache-2.0'
 description 'Installs and configures fail2ban'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '5.0.0'
+version '5.0.2'
 
 recipe 'default', 'Installs and configures fail2ban'
 
@@ -16,4 +16,4 @@ end
 
 source_url 'https://github.com/chef-cookbooks/fail2ban'
 issues_url 'https://github.com/chef-cookbooks/fail2ban/issues'
-chef_version '>= 12.5'
+chef_version '>= 12.9'
